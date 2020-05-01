@@ -3,6 +3,7 @@
 //
 
 #include "BitReader.h"
+#include "BitWriter.h"
 
 using namespace std;
 
@@ -15,11 +16,11 @@ struct test {
   uint32_t t3;
 
   struct {
-    uint32_t tt1 : 2;
-    uint32_t tt5 : 5;
-    uint32_t tt2 : 3;
-    uint32_t tt3 : 20;
-    uint32_t tt4 : 1;
+    uint32_t tt1 : 1;
+    uint32_t tt5 : 4;
+    uint32_t tt2 : 7;
+    uint32_t tt3 : 9;
+    uint32_t tt4 : 11;
   };
 };
 
@@ -27,19 +28,45 @@ struct test {
 
 int main() {
 
-  test TT = {1, 2, 3, {1, 2, 2, 633, 1}};
+  test TT = {1, 2, 3, {1, 2, 2, 144, 345}};
   void *k = &TT;
 
-  BufferReader *br = new BufferReader((unsigned char *)&TT);
+  unsigned char t[100] = {0};
+  unsigned char *tp = t;
+  BitWriter *bw = new BitWriter(tp, 100);
+  bw->write_8_bit(1);
+  bw->write_16_bit(2);
+  bw->write_32_bit(3);
+  bw->write_n_bit(1, 1);
+  bw->write_n_bit(2, 4);
+  bw->write_n_bit(2, 7);
+  bw->write_n_bit(144, 9);
+  bw->write_n_bit(345, 11);
+  size_t kz = bw->size();
+  bw->write_n_bit(6, 3);
+  bw->write_n_bit(12, 7);
+  kz = bw->size();
+
+  BitReader *br = new BitReader(tp);
   cout << br->read_8_bit() << endl;
   cout << br->read_16_bit() << endl;
   cout << br->read_32_bit() << endl;
 
-  cout << br->read_n_bit(2) << endl;
-  cout << br->read_n_bit(5) << endl;
-  cout << br->read_n_bit(3) << endl;
-  cout << br->read_n_bit(20) << endl;
   cout << br->read_n_bit(1) << endl;
+  cout << br->read_n_bit(4) << endl;
+  cout << br->read_n_bit(7) << endl;
+  cout << br->read_n_bit(9) << endl;
+  cout << br->read_n_bit(11) << endl;
+  cout << br->read_n_bit(3) << endl;
+  cout << br->read_n_bit(7) << endl;
+
+  for (int i = 0; i < 10; ++i) {
+    bw->write_n_bit(4, 3);
+  }
+
+  for (int i = 0; i < 10; ++i) {
+    cout << br->read_n_bit(3) << endl;
+  }
 
   std::cout << "Hello World!\n";
 }

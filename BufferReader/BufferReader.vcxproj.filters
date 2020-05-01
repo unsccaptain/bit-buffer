@@ -18,9 +18,18 @@
     <ClCompile Include="BufferReader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BitReader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BitWriter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitReader.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BitWriter.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>

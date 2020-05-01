@@ -151,10 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BitReader.cpp" />
+    <ClCompile Include="BitWriter.cpp" />
     <ClCompile Include="BufferReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitReader.h" />
+    <ClInclude Include="BitWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\readme.md" />
